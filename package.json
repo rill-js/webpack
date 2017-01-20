@@ -1,0 +1,42 @@
+{
+  "name": "@rill/webpack",
+  "description": "Webpack dev middleware for Rill.",
+  "version": "1.0.1",
+  "author": "Dylan Piercey <pierceydylan@gmail.com>",
+  "browser": {
+    "./index.js": "./noop.js",
+    "./hot.js": "./noop.js"
+  },
+  "bugs": "https://github.com/rill-js/webpack/issues",
+  "dependencies": {
+    "webpack-dev-middleware": "^1.9.0",
+    "webpack-hot-middleware": "^2.15.0"
+  },
+  "devDependencies": {
+    "rill": "^2.5.1",
+    "snazzy": "^6.0.0",
+    "standard": "^8.6.0"
+  },
+  "homepage": "https://github.com/rill-js/webpack",
+  "keywords": [
+    "dev",
+    "hot",
+    "isomorphic",
+    "reload",
+    "rill",
+    "universal",
+    "webpack"
+  ],
+  "license": "MIT",
+  "main": "index.js",
+  "peerDependencies": {
+    "webpack": "^1.14.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/rill-js/webpack"
+  },
+  "scripts": {
+    "test": "standard --verbose | snazzy"
+  }
+}
