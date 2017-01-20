@@ -16,7 +16,15 @@ module.exports = function (file, options) {
     file = 'webpack.config.js'
   }
 
+  // Create dev middleware.
+  options = options || {}
   var devMiddleware = createDevMiddleware(load(file), options)
+
+  // Add custom 'onValid' option that gets get called on initial render.
+  if (typeof options.onValid === 'function') {
+    devMiddleware.waitUntilValid(options.onValid)
+  }
+
   return function webpackDevMiddleware (ctx, next) {
     return new Promise(function (resolve, reject) {
       devMiddleware(ctx.req.original, {
