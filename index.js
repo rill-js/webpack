@@ -11,7 +11,7 @@ var load = require('./load')
  */
 module.exports = function (file, options) {
   // Make file optional.
-  if (typeof file === 'object') {
+  if (typeof file === 'object' || file === undefined) {
     options = file
     file = 'webpack.config.js'
   }
