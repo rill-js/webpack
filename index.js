@@ -1,7 +1,7 @@
 'use strict'
 
 var createDevMiddleware = require('webpack-dev-middleware')
-var load = require('./load')
+var util = require('./util')
 
 /**
  * Creates a rill compatible middleware for webpack-dev-middleware.
@@ -11,14 +11,14 @@ var load = require('./load')
  */
 module.exports = function (file, options) {
   // Make file optional.
-  if (typeof file === 'object' || file === undefined) {
+  if (util.isMissingFile(file)) {
     options = file
     file = 'webpack.config.js'
   }
 
   // Create dev middleware.
   options = options || {}
-  var devMiddleware = createDevMiddleware(load(file), options)
+  var devMiddleware = createDevMiddleware(util.load(file), options)
 
   // Add custom 'onValid' option that gets get called on initial render.
   if (typeof options.onValid === 'function') {

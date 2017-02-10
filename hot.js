@@ -1,7 +1,7 @@
 'use strict'
 
 var createHotMiddleware = require('webpack-hot-middleware')
-var load = require('./load')
+var util = require('./util')
 
 /**
  * Creates a rill compatible middleware for webpack-dev-middleware.
@@ -11,7 +11,7 @@ var load = require('./load')
  */
 module.exports = function (file, options) {
   // Make file optional.
-  if (typeof file === 'object' || file === undefined) {
+  if (util.isMissingFile(file)) {
     options = file
     file = 'webpack.config.js'
   }
@@ -19,7 +19,7 @@ module.exports = function (file, options) {
   options = options || {}
   options.path = options.path || '/__webpack_hmr'
   options.log = 'log' in options ? options.log : false
-  var hotMiddleware = createHotMiddleware(load(file), options)
+  var hotMiddleware = createHotMiddleware(util.load(file), options)
   return function webpackHotMiddleware (ctx, next) {
     if (ctx.req.pathname === options.path) {
       ctx.res.respond = false
