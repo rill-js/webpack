@@ -2,6 +2,7 @@
 
 var createDevMiddleware = require('webpack-dev-middleware')
 var util = require('./util')
+var middlewareCache = {}
 
 /**
  * Creates a rill compatible middleware for webpack-dev-middleware.
@@ -18,14 +19,22 @@ module.exports = function (file, options) {
 
   // Create dev middleware.
   options = options || {}
-  var devMiddleware = createDevMiddleware(util.load(file), options)
+
+  // Check for cached version of middleware.
+  var cacheKey = JSON.stringify(arguments)
+  var cached = middlewareCache[cacheKey]
+  var devMiddleware = cached || createDevMiddleware(util.load(file), options)
 
   // Add custom 'onValid' option that gets get called on initial render.
   if (typeof options.onValid === 'function') {
     devMiddleware.waitUntilValid(options.onValid)
   }
 
-  return function webpackDevMiddleware (ctx, next) {
+  // Return cached if possible.
+  if (cached) return cached
+
+  // Create a rill compatible version of the dev middleware.
+  cached = middlewareCache[cacheKey] = function webpackDevMiddleware (ctx, next) {
     return new Promise(function (resolve, reject) {
       devMiddleware(ctx.req.original, {
         end: function (body) {
@@ -41,4 +50,6 @@ module.exports = function (file, options) {
       })
     })
   }
+
+  return cached
 }

@@ -5,17 +5,18 @@
   "author": "Dylan Piercey <pierceydylan@gmail.com>",
   "browser": {
     "./index.js": "./noop.js",
-    "./hot.js": "./noop.js"
+    "./hot/index.js": "./noop.js",
+    "./hot/client.js": "webpack-hot-middleware/client.js"
   },
   "bugs": "https://github.com/rill-js/webpack/issues",
   "dependencies": {
-    "webpack-dev-middleware": "^1.10.0",
-    "webpack-hot-middleware": "^2.16.1"
+    "webpack-dev-middleware": "^1.11.0",
+    "webpack-hot-middleware": "^2.18.0"
   },
   "devDependencies": {
-    "rill": "^3.0.2",
-    "snazzy": "^6.0.0",
-    "standard": "^8.6.0"
+    "rill": "^5.0.4",
+    "snazzy": "^7.0.0",
+    "standard": "^10.0.2"
   },
   "homepage": "https://github.com/rill-js/webpack",
   "keywords": [

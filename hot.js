@@ -2,6 +2,8 @@
 
 var createHotMiddleware = require('webpack-hot-middleware')
 var util = require('./util')
+var middlewareCache = {}
+require('./client')
 
 /**
  * Creates a rill compatible middleware for webpack-dev-middleware.
@@ -16,11 +18,21 @@ module.exports = function (file, options) {
     file = 'webpack.config.js'
   }
 
+  // Set default options.
   options = options || {}
-  options.path = options.path || '/__webpack_hmr'
+  options.path = options.path || '/@rill/webpack/hot'
   options.log = 'log' in options ? options.log : false
+
+  // Check for cached version of middleware.
+  var cacheKey = JSON.stringify(arguments)
+  var cached = middlewareCache[cacheKey]
+
+  // Return cached if possible.
+  if (cached) return cached
+
+  // Create a rill compatible version of the hot middleware.
   var hotMiddleware = createHotMiddleware(util.load(file), options)
-  return function webpackHotMiddleware (ctx, next) {
+  cached = middlewareCache[cacheKey] = function webpackHotMiddleware (ctx, next) {
     if (ctx.req.pathname === options.path) {
       ctx.res.respond = false
       return hotMiddleware(ctx.req.original, ctx.res.original)
@@ -28,4 +40,5 @@ module.exports = function (file, options) {
 
     return next()
   }
+  return cached
 }
