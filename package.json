@@ -5,8 +5,7 @@
   "author": "Dylan Piercey <pierceydylan@gmail.com>",
   "browser": {
     "./index.js": "./noop.js",
-    "./hot/index.js": "./noop.js",
-    "./hot/client.js": "webpack-hot-middleware/client.js"
+    "./hot/index.js": "webpack-hot-middleware/client.js"
   },
   "bugs": "https://github.com/rill-js/webpack/issues",
   "dependencies": {

@@ -40,7 +40,7 @@ npm install @rill/webpack
 ```js
 const app = require('rill')()
 const devMiddleware = require('@rill/webpack')
-const hotMiddleware = require('@rill/webpack/hot')
+const hotMiddleware = require('@rill/webpack/hot?overlay=false&timeout=1000') // pass in client side options via query string.
 
 // Setup the dev middleware (provide config path relative to project root).
 app.use(devMiddleware('webpack.config.js', {
