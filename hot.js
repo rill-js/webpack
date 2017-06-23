@@ -3,7 +3,6 @@
 var createHotMiddleware = require('webpack-hot-middleware')
 var util = require('./util')
 var middlewareCache = {}
-require('./client')
 
 /**
  * Creates a rill compatible middleware for webpack-dev-middleware.
